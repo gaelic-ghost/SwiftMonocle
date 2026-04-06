@@ -22,13 +22,19 @@ let package = Package(
             targets: ["SwiftMonocleCodeScope"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "603.0.0"),
+    ],
     targets: [
         .target(
             name: "SwiftMonocleCore"
         ),
         .target(
             name: "SwiftMonocleCodeScope",
-            dependencies: ["SwiftMonocleCore"]
+            dependencies: [
+                "SwiftMonocleCore",
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+            ]
         ),
         .target(
             name: "SwiftMonocle",
