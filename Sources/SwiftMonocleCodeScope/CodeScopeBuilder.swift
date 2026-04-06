@@ -3,11 +3,16 @@ import SwiftMonocleCore
 
 // MARK: - CodeScope builder
 
+private typealias ScopeTextRange = SwiftMonocleCore.TextRange
+
 public struct CodeScopeBuilder: Sendable {
+    private let syntaxSymbolExtractor = SyntaxSymbolExtractor()
+
     public init() {}
 
     public func build(from input: CodeScopeInput) -> CodeScopeSnapshot {
-        let rankedSymbols = input.symbols.candidates.sorted { lhs, rhs in
+        let symbolInput = mergedSymbols(from: input)
+        let rankedSymbols = symbolInput.candidates.sorted { lhs, rhs in
             if lhs.relevanceScore == rhs.relevanceScore {
                 return lhs.name < rhs.name
             }
@@ -15,8 +20,14 @@ public struct CodeScopeBuilder: Sendable {
         }
 
         let focalSymbol = rankedSymbols.first
-        let enclosingSymbols = focalSymbol.map { [$0] } ?? []
-        let neighboringSymbols = Array(rankedSymbols.dropFirst().prefix(5))
+        let enclosingSymbols = enclosingSymbols(
+            for: focalSymbol,
+            in: rankedSymbols
+        )
+        let neighboringSymbols = neighboringSymbols(
+            for: focalSymbol,
+            in: rankedSymbols
+        )
 
         let diagnostics = DiagnosticsScope(
             fileDiagnostics: rankedByRelevance(input.diagnostics.fileDiagnostics),
@@ -51,6 +62,21 @@ public struct CodeScopeBuilder: Sendable {
             agent: input.agent?.scope,
             actions: actions,
             provenance: ScopeProvenance(sources: mergedProvenance(from: input))
+        )
+    }
+
+    private func mergedSymbols(from input: CodeScopeInput) -> CodeScopeSymbolInput {
+        guard
+            input.symbols.candidates.isEmpty,
+            let editor = input.editor,
+            let extraction = syntaxSymbolExtractor.extract(from: editor)
+        else {
+            return input.symbols
+        }
+
+        return CodeScopeSymbolInput(
+            candidates: extraction.candidates,
+            sources: input.symbols.sources + [extraction.source]
         )
     }
 
@@ -130,7 +156,7 @@ public struct CodeScopeBuilder: Sendable {
         if let editor = input.editor {
             records.append(editor.source)
         }
-        records.append(contentsOf: input.symbols.sources)
+        records.append(contentsOf: mergedSymbols(from: input).sources)
         records.append(contentsOf: input.diagnostics.sources)
         records.append(contentsOf: input.docs.sources)
         if let agent = input.agent {
@@ -143,6 +169,99 @@ public struct CodeScopeBuilder: Sendable {
             return lhs.observedAt > rhs.observedAt
         }
     }
+}
+
+private func enclosingSymbols(
+    for focalSymbol: SymbolReference?,
+    in rankedSymbols: [SymbolReference]
+) -> [SymbolReference] {
+    guard let focalSymbol else {
+        return []
+    }
+
+    return rankedSymbols
+        .filter { candidate in
+            candidate.id != focalSymbol.id &&
+            candidate.file == focalSymbol.file &&
+            contains(candidate.range, other: focalSymbol.range)
+        }
+        .sorted { lhs, rhs in
+            rangeSpan(lhs.range) < rangeSpan(rhs.range)
+        }
+}
+
+private func neighboringSymbols(
+    for focalSymbol: SymbolReference?,
+    in rankedSymbols: [SymbolReference]
+) -> [SymbolReference] {
+    guard let focalSymbol else {
+        return Array(rankedSymbols.prefix(5))
+    }
+
+    let containers = Set(
+        enclosingSymbols(for: focalSymbol, in: rankedSymbols).map(\.id)
+    )
+
+    return rankedSymbols
+        .filter { candidate in
+            candidate.id != focalSymbol.id &&
+            !containers.contains(candidate.id) &&
+            candidate.file == focalSymbol.file
+        }
+        .sorted { lhs, rhs in
+            let lhsDistance = lineDistance(between: lhs.range, and: focalSymbol.range)
+            let rhsDistance = lineDistance(between: rhs.range, and: focalSymbol.range)
+
+            if lhsDistance == rhsDistance {
+                return lhs.relevanceScore > rhs.relevanceScore
+            }
+
+            return lhsDistance < rhsDistance
+        }
+        .prefix(5)
+        .map { $0 }
+}
+
+private func contains(_ container: ScopeTextRange, other range: ScopeTextRange) -> Bool {
+    let sameStart =
+        container.startLine == range.startLine &&
+        container.startColumn == range.startColumn
+    let sameEnd =
+        container.endLine == range.endLine &&
+        container.endColumn == range.endColumn
+
+    if sameStart && sameEnd {
+        return false
+    }
+
+    let startsBefore =
+        container.startLine < range.startLine ||
+        (container.startLine == range.startLine && container.startColumn <= range.startColumn)
+    let endsAfter =
+        container.endLine > range.endLine ||
+        (container.endLine == range.endLine && container.endColumn >= range.endColumn)
+
+    return startsBefore && endsAfter
+}
+
+private func rangeSpan(_ range: ScopeTextRange) -> Int {
+    max(1, range.endLine - range.startLine)
+}
+
+private func lineDistance(between lhs: ScopeTextRange, and rhs: ScopeTextRange) -> Int {
+    if contains(lhs, other: rhs) || contains(rhs, other: lhs) {
+        return 0
+    }
+
+    if lhs.endLine < rhs.startLine {
+        return rhs.startLine - lhs.endLine
+    }
+
+    if rhs.endLine < lhs.startLine {
+        return lhs.startLine - rhs.endLine
+    }
+
+    return 0
 }
 
 private func rankedByRelevance<Value>(_ values: [Value]) -> [Value] where Value: RelevanceScored {

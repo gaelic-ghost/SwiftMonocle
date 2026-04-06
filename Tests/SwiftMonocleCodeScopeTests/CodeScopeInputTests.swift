@@ -67,3 +67,42 @@ import SwiftMonocleCore
     #expect(snapshot.provenance.sources.first?.source == .docsEngine)
     #expect(snapshot.docs.pendingRefresh)
 }
+
+@Test func builderDerivesSyntaxSymbolsFromEditorBuffer() async throws {
+    let file = FileReference(path: "/tmp/SwiftMonocle/Sources/Feature/Greeter.swift")
+    let source = """
+    struct Greeter {
+        let name: String
+
+        func greet() {
+            print(name)
+        }
+
+        func helper() {}
+    }
+    """
+
+    let snapshot = CodeScopeBuilder().build(
+        from: CodeScopeInput(
+            reason: .editorChanged,
+            workspace: WorkspaceScope(rootPath: "/tmp/SwiftMonocle"),
+            editor: CodeScopeEditorInput(
+                scope: EditorScope(
+                    file: file,
+                    cursor: TextCursor(line: 4, column: 12)
+                ),
+                bufferText: source,
+                source: ScopeSourceRecord(
+                    source: .editorExtension,
+                    observedAt: .now,
+                    freshness: .live
+                )
+            )
+        )
+    )
+
+    #expect(snapshot.symbols.focalSymbol?.name == "greet")
+    #expect(snapshot.symbols.enclosingSymbols.map(\.name) == ["Greeter"])
+    #expect(snapshot.symbols.neighboringSymbols.contains { $0.name == "helper" })
+    #expect(snapshot.provenance.sources.contains { $0.source == .swiftSyntax })
+}

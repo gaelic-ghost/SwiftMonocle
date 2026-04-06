@@ -35,10 +35,16 @@ public struct CodeScopeInput: Sendable {
 
 public struct CodeScopeEditorInput: Sendable {
     public var scope: EditorScope
+    public var bufferText: String?
     public var source: ScopeSourceRecord
 
-    public init(scope: EditorScope, source: ScopeSourceRecord) {
+    public init(
+        scope: EditorScope,
+        bufferText: String? = nil,
+        source: ScopeSourceRecord
+    ) {
         self.scope = scope
+        self.bufferText = bufferText
         self.source = source
     }
 }

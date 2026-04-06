@@ -34,6 +34,7 @@ let package = Package(
             dependencies: [
                 "SwiftMonocleCore",
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
             ]
         ),
         .target(
