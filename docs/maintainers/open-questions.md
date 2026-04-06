@@ -121,3 +121,5 @@ The next maintainer document should define the first concrete `CodeScope` snapsh
 - diagnostics model
 - ranked docs attachments
 - agent-session attachments
+
+That design is now captured in `docs/maintainers/codescope-snapshot.md`.
