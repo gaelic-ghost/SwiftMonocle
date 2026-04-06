@@ -9,21 +9,42 @@ let package = Package(
         .macOS("15.0"),
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SwiftMonocle",
             targets: ["SwiftMonocle"]
         ),
+        .library(
+            name: "SwiftMonocleCore",
+            targets: ["SwiftMonocleCore"]
+        ),
+        .library(
+            name: "SwiftMonocleCodeScope",
+            targets: ["SwiftMonocleCodeScope"]
+        ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SwiftMonocle"
+            name: "SwiftMonocleCore"
+        ),
+        .target(
+            name: "SwiftMonocleCodeScope",
+            dependencies: ["SwiftMonocleCore"]
+        ),
+        .target(
+            name: "SwiftMonocle",
+            dependencies: ["SwiftMonocleCodeScope"]
         ),
         .testTarget(
             name: "SwiftMonocleTests",
             dependencies: ["SwiftMonocle"]
+        ),
+        .testTarget(
+            name: "SwiftMonocleCoreTests",
+            dependencies: ["SwiftMonocleCore"]
+        ),
+        .testTarget(
+            name: "SwiftMonocleCodeScopeTests",
+            dependencies: ["SwiftMonocleCodeScope"]
         ),
     ],
     swiftLanguageModes: [.v6]

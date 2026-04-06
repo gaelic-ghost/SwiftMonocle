@@ -1,9 +1,17 @@
 import Testing
 @testable import SwiftMonocle
+import SwiftMonocleCore
 
-// MARK: - Baseline package tests
+// MARK: - Top-level package tests
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-    _ = SwiftMonocle.self
+@Test func packageSurfaceExportsCodeScope() async throws {
+    let builder = CodeScopeBuilder()
+    let snapshot = builder.build(
+        from: CodeScopeBuildRequest(
+            reason: .manualRefresh,
+            workspace: WorkspaceScope(rootPath: "/tmp/SwiftMonocle")
+        )
+    )
+
+    #expect(snapshot.reason == CodeScopeReason.manualRefresh)
 }
