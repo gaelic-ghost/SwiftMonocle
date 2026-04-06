@@ -1,52 +1,13 @@
 import Foundation
 import SwiftMonocleCore
 
-// MARK: - CodeScope build request
-
-public struct CodeScopeBuildRequest: Sendable {
-    public var reason: CodeScopeReason
-    public var workspace: WorkspaceScope
-    public var editor: EditorScope?
-    public var symbolCandidates: [SymbolReference]
-    public var fileDiagnostics: [DiagnosticRecord]
-    public var relatedDiagnostics: [DiagnosticRecord]
-    public var directDocuments: [DocumentReference]
-    public var supportingDocuments: [DocumentReference]
-    public var agent: AgentScope?
-    public var provenance: [ScopeSourceRecord]
-
-    public init(
-        reason: CodeScopeReason,
-        workspace: WorkspaceScope,
-        editor: EditorScope? = nil,
-        symbolCandidates: [SymbolReference] = [],
-        fileDiagnostics: [DiagnosticRecord] = [],
-        relatedDiagnostics: [DiagnosticRecord] = [],
-        directDocuments: [DocumentReference] = [],
-        supportingDocuments: [DocumentReference] = [],
-        agent: AgentScope? = nil,
-        provenance: [ScopeSourceRecord] = []
-    ) {
-        self.reason = reason
-        self.workspace = workspace
-        self.editor = editor
-        self.symbolCandidates = symbolCandidates
-        self.fileDiagnostics = fileDiagnostics
-        self.relatedDiagnostics = relatedDiagnostics
-        self.directDocuments = directDocuments
-        self.supportingDocuments = supportingDocuments
-        self.agent = agent
-        self.provenance = provenance
-    }
-}
-
 // MARK: - CodeScope builder
 
 public struct CodeScopeBuilder: Sendable {
     public init() {}
 
-    public func build(from request: CodeScopeBuildRequest) -> CodeScopeSnapshot {
-        let rankedSymbols = request.symbolCandidates.sorted { lhs, rhs in
+    public func build(from input: CodeScopeInput) -> CodeScopeSnapshot {
+        let rankedSymbols = input.symbols.candidates.sorted { lhs, rhs in
             if lhs.relevanceScore == rhs.relevanceScore {
                 return lhs.name < rhs.name
             }
@@ -58,27 +19,27 @@ public struct CodeScopeBuilder: Sendable {
         let neighboringSymbols = Array(rankedSymbols.dropFirst().prefix(5))
 
         let diagnostics = DiagnosticsScope(
-            fileDiagnostics: rankedByRelevance(request.fileDiagnostics),
-            relatedDiagnostics: rankedByRelevance(request.relatedDiagnostics)
+            fileDiagnostics: rankedByRelevance(input.diagnostics.fileDiagnostics),
+            relatedDiagnostics: rankedByRelevance(input.diagnostics.relatedDiagnostics)
         )
 
         let docs = DocScope(
-            directMatches: rankedByRelevance(request.directDocuments),
-            supportingMatches: rankedByRelevance(request.supportingDocuments),
-            pendingRefresh: false
+            directMatches: rankedByRelevance(input.docs.directMatches),
+            supportingMatches: rankedByRelevance(input.docs.supportingMatches),
+            pendingRefresh: input.docs.pendingRefresh
         )
 
         let actions = recommendedActions(
             symbols: focalSymbol,
             diagnostics: diagnostics,
             docs: docs,
-            agent: request.agent
+            agent: input.agent?.scope
         )
 
         return CodeScopeSnapshot(
-            reason: request.reason,
-            workspace: normalizedWorkspace(request.workspace),
-            editor: request.editor,
+            reason: input.reason,
+            workspace: normalizedWorkspace(input.workspace),
+            editor: input.editor?.scope,
             symbols: SymbolScope(
                 focalSymbol: focalSymbol,
                 enclosingSymbols: enclosingSymbols,
@@ -87,9 +48,9 @@ public struct CodeScopeBuilder: Sendable {
             ),
             diagnostics: diagnostics,
             docs: docs,
-            agent: request.agent,
+            agent: input.agent?.scope,
             actions: actions,
-            provenance: ScopeProvenance(sources: request.provenance)
+            provenance: ScopeProvenance(sources: mergedProvenance(from: input))
         )
     }
 
@@ -162,6 +123,25 @@ public struct CodeScopeBuilder: Sendable {
         }
 
         return actions
+    }
+
+    private func mergedProvenance(from input: CodeScopeInput) -> [ScopeSourceRecord] {
+        var records: [ScopeSourceRecord] = []
+        if let editor = input.editor {
+            records.append(editor.source)
+        }
+        records.append(contentsOf: input.symbols.sources)
+        records.append(contentsOf: input.diagnostics.sources)
+        records.append(contentsOf: input.docs.sources)
+        if let agent = input.agent {
+            records.append(agent.source)
+        }
+        return records.sorted { lhs, rhs in
+            if lhs.observedAt == rhs.observedAt {
+                return lhs.source.rawValue < rhs.source.rawValue
+            }
+            return lhs.observedAt > rhs.observedAt
+        }
     }
 }
 

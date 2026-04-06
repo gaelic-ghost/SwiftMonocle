@@ -9,25 +9,27 @@ import SwiftMonocleCore
     let range = TextRange(startLine: 1, startColumn: 1, endLine: 10, endColumn: 1)
 
     let snapshot = CodeScopeBuilder().build(
-        from: CodeScopeBuildRequest(
+        from: CodeScopeInput(
             reason: .agentRequest,
             workspace: WorkspaceScope(rootPath: "/tmp/SwiftMonocle"),
-            symbolCandidates: [
-                SymbolReference(
-                    name: "WorkspaceScope",
-                    kind: .struct,
-                    file: file,
-                    range: range,
-                    relevanceScore: 0.4
-                ),
-                SymbolReference(
-                    name: "CodeScopeSnapshot",
-                    kind: .struct,
-                    file: file,
-                    range: range,
-                    relevanceScore: 0.9
-                ),
-            ]
+            symbols: CodeScopeSymbolInput(
+                candidates: [
+                    SymbolReference(
+                        name: "WorkspaceScope",
+                        kind: .struct,
+                        file: file,
+                        range: range,
+                        relevanceScore: 0.4
+                    ),
+                    SymbolReference(
+                        name: "CodeScopeSnapshot",
+                        kind: .struct,
+                        file: file,
+                        range: range,
+                        relevanceScore: 0.9
+                    ),
+                ]
+            )
         )
     )
 
@@ -39,18 +41,20 @@ import SwiftMonocleCore
     let file = FileReference(path: "/tmp/SwiftMonocle/Sources/SwiftMonocleCore/CodeScopeSnapshot.swift")
 
     let snapshot = CodeScopeBuilder().build(
-        from: CodeScopeBuildRequest(
+        from: CodeScopeInput(
             reason: .diagnosticsChanged,
             workspace: WorkspaceScope(rootPath: "/tmp/SwiftMonocle"),
-            fileDiagnostics: [
-                DiagnosticRecord(
-                    severity: .error,
-                    message: "Example error",
-                    source: "xcode",
-                    file: file,
-                    relevanceScore: 1
-                )
-            ]
+            diagnostics: CodeScopeDiagnosticsInput(
+                fileDiagnostics: [
+                    DiagnosticRecord(
+                        severity: .error,
+                        message: "Example error",
+                        source: "xcode",
+                        file: file,
+                        relevanceScore: 1
+                    )
+                ]
+            )
         )
     )
 

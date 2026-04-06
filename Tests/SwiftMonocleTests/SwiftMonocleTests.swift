@@ -7,7 +7,7 @@ import SwiftMonocleCore
 @Test func packageSurfaceExportsCodeScope() async throws {
     let builder = CodeScopeBuilder()
     let snapshot = builder.build(
-        from: CodeScopeBuildRequest(
+        from: CodeScopeInput(
             reason: .manualRefresh,
             workspace: WorkspaceScope(rootPath: "/tmp/SwiftMonocle")
         )

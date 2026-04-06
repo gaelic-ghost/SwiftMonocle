@@ -86,7 +86,7 @@ We still need to confirm which deliverables should remain pure Swift packages ve
 
 - ingest active editor context
 - ingest relevant Xcode MCP context
-- normalize both into the same scope model
+- normalize both into the same scope model through the `CodeScopeInput` adapter layer
 
 ## Stage 3: Agent and docs integration
 

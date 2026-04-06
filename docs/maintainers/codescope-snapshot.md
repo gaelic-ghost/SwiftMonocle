@@ -373,10 +373,28 @@ This gives us one shared truth source before we optimize for narrower transports
 
 ### `SwiftMonocleCodeScope`
 
+- transport-normalizing input feeds such as editor, diagnostics, docs, and agent inputs
 - snapshot builders
 - symbol ranking
 - related-file ranking
 - recommendation generation
+
+## Adapter boundary
+
+Phase 1 now uses a transport-normalizing input layer in `SwiftMonocleCodeScope` before snapshot assembly.
+
+The current model is:
+
+- `CodeScopeInput`
+- `CodeScopeEditorInput`
+- `CodeScopeSymbolInput`
+- `CodeScopeDiagnosticsInput`
+- `CodeScopeDocsInput`
+- `CodeScopeAgentInput`
+
+This layer exists so editor-extension data, Xcode MCP data, docs-engine data, and Codex-facing agent data can arrive as separate feeds with separate provenance and freshness while still building one unified `CodeScopeSnapshot`.
+
+That keeps raw transport shape out of `SwiftMonocleCore` and gives the snapshot builder one stable internal assembly boundary.
 
 ### `SwiftMonocleDocs`
 
