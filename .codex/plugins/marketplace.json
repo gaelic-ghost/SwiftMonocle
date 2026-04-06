@@ -1,0 +1,20 @@
+{
+  "name": "local-repo-install-swiftmonocle-d21977aa",
+  "interface": {
+    "displayName": "Local Repo Install Swiftmonocle D21977Aa"
+  },
+  "plugins": [
+    {
+      "name": "apple-dev-skills",
+      "source": {
+        "source": "local",
+        "path": "./.codex/plugins/apple-dev-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
