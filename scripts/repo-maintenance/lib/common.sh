@@ -1,8 +1,17 @@
 #!/usr/bin/env sh
 set -eu
 
-COMMON_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-REPO_MAINTENANCE_ROOT=$(CDPATH= cd -- "$COMMON_DIR/.." && pwd)
+# common.sh is sourced, so `$0` points at the entrypoint script rather than this file.
+# Resolve the toolkit root from the caller's already-computed SELF_DIR instead.
+if [ -n "${SELF_DIR:-}" ] && [ -f "$SELF_DIR/lib/common.sh" ]; then
+  REPO_MAINTENANCE_ROOT=$(CDPATH= cd -- "$SELF_DIR" && pwd)
+elif [ -n "${SELF_DIR:-}" ] && [ -f "$SELF_DIR/../lib/common.sh" ]; then
+  REPO_MAINTENANCE_ROOT=$(CDPATH= cd -- "$SELF_DIR/.." && pwd)
+else
+  COMMON_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+  REPO_MAINTENANCE_ROOT=$(CDPATH= cd -- "$COMMON_DIR/.." && pwd)
+fi
+
 REPO_ROOT=$(CDPATH= cd -- "$REPO_MAINTENANCE_ROOT/../.." && pwd)
 
 log() {

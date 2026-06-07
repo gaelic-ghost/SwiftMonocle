@@ -12,6 +12,8 @@ This document tracks the unresolved architectural questions and staged decisions
 - `CodeScope` should be the center of the internal model.
 - Codex `app-server` is the preferred first-class interactive bridge.
 - The future UI should support both human-friendly code understanding and voice-interface status and transcript presentation.
+- The phase-1 package surface already includes `SwiftMonocleCore`, `SwiftMonocleCodeScope`, and an umbrella `SwiftMonocle` product.
+- `CodeScopeInput` and `CodeScopeBuilder` are the current normalization and assembly seam for the first scope pipeline.
 
 ## Active open questions
 
@@ -42,7 +44,7 @@ Do not build a second primary automation path until a concrete use case requires
 
 ## 3. CodeScope semantic depth
 
-We expect to use `SwiftSyntax`, but it is still open how much semantic understanding should come from:
+We already use `SwiftSyntax`, but it is still open how much deeper semantic understanding should come from:
 
 - `SwiftSyntax`
 - Xcode or SourceKit-derived data
@@ -77,28 +79,28 @@ We still need to confirm which deliverables should remain pure Swift packages ve
 
 ## Stage 1: Core model and host
 
-- define `SwiftMonocleCore`
-- define the first `CodeScope` model
-- stand up one Hummingbird host
-- expose one curated MCP surface
+- [x] define `SwiftMonocleCore`
+- [x] define the first `CodeScope` model
+- [ ] stand up one Hummingbird host
+- [ ] expose one curated MCP surface
 
 ## Stage 2: Editor and Xcode context
 
-- ingest active editor context
-- ingest relevant Xcode MCP context
-- normalize both into the same scope model through the `CodeScopeInput` adapter layer
+- [ ] ingest active editor context
+- [ ] ingest relevant Xcode MCP context
+- [x] normalize incoming feeds around the `CodeScopeInput` adapter layer
 
 ## Stage 3: Agent and docs integration
 
-- wire in Codex `app-server`
-- add ranked documentation retrieval and caching
-- present agent state and approvals through the same control plane
+- [ ] wire in Codex `app-server`
+- [ ] add ranked documentation retrieval and caching
+- [ ] present agent state and approvals through the same control plane
 
 ## Stage 4: App and extension surfaces
 
-- build the macOS app target
-- build the Xcode Source Editor Extension target
-- validate projected UI and editable-buffer-adjacent workflows
+- [ ] build the macOS app target
+- [ ] build the Xcode Source Editor Extension target
+- [ ] validate projected UI and editable-buffer-adjacent workflows
 
 ## Package graph to start from
 
