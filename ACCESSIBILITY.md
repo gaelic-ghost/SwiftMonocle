@@ -1,6 +1,6 @@
 # Accessibility
 
-SwiftMonocle is currently a Swift package without a runtime UI. Accessibility requirements still matter because the planned macOS app, Xcode-facing workflows, and future voice/status surfaces should be designed from the start as accessible interfaces.
+SwiftMonocle is currently a Swift package with a bootstrap macOS app shell. Accessibility requirements matter because graph visualization, Xcode-facing workflows, and future voice/status surfaces should be designed from the start as accessible interfaces.
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ No app UI has shipped yet. Accessibility guidance is therefore a planning and de
 
 ### Scope
 
-This file applies to future SwiftUI, AppKit, Xcode extension, graph visualization, command, status, and voice-adjacent UI surfaces added to this repository.
+This file applies to SwiftUI, AppKit, Xcode extension, graph visualization, command, status, and voice-adjacent UI surfaces added to this repository.
 
 ### Accessibility Goals
 

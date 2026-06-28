@@ -26,7 +26,7 @@ Read `README.md`, `ROADMAP.md`, and `AGENTS.md` first. The package is still unst
 
 ### Choosing Work
 
-Prefer small, coherent changes tied to the current roadmap. Keep package libraries focused on reusable model, parsing, bridge, and control-plane behavior; keep app-target planning explicit until the Xcode app boundary is intentionally added.
+Prefer small, coherent changes tied to the current roadmap. Keep package libraries focused on reusable model, parsing, bridge, and control-plane behavior; keep app-target changes inside the explicit Xcode app boundary.
 
 ### Making Changes
 
@@ -40,11 +40,11 @@ Summarize the changed surface, the reason for the change, and the validation per
 
 ### Runtime Config
 
-There is no runtime host or app target yet. Local work currently uses the Swift package, repo-maintenance scripts, and checked-in formatting/linting configuration.
+Local work currently uses the Swift package, the XcodeGen-backed macOS app target, repo-maintenance scripts, and checked-in formatting/linting configuration.
 
 ### Runtime Behavior
 
-The current package builds library products and tests. Future local runtime and macOS app behavior should be introduced through explicit roadmap items and maintainer docs before implementation.
+The current package builds library products and tests. The macOS app target is a bootstrap visualization shell; new runtime, graph extraction, or editor-integration behavior should be introduced through explicit roadmap items and maintainer docs before implementation.
 
 ## Development Expectations
 
@@ -54,7 +54,7 @@ Use stable names when a model keeps the same meaning across package layers. Pres
 
 ### Accessibility Expectations
 
-Package-only changes should avoid creating accessibility claims that cannot be verified. UI work belongs behind the future macOS app or extension boundary and should follow `ACCESSIBILITY.md`.
+Package-only changes should avoid creating accessibility claims that cannot be verified. UI work belongs behind the macOS app or extension boundary and should follow `ACCESSIBILITY.md`.
 
 ### Verification
 

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file governs agent work in the SwiftMonocle Swift Package Manager repository. Keep repo-local instructions focused on package structure, validation, documentation, and future macOS app boundary decisions.
+This file governs agent work in the SwiftMonocle Swift Package Manager repository. Keep repo-local instructions focused on package structure, app-boundary changes, validation, documentation, and macOS app planning decisions.
 
 ## Baseline Provenance
 
@@ -12,17 +12,18 @@ This file governs agent work in the SwiftMonocle Swift Package Manager repositor
 
 ### What This File Covers
 
-This file covers source, tests, docs, package graph changes, repo-maintenance scripts, and planning work in this SwiftPM package. It does not by itself authorize release, publish, protected-main merge, or future Xcode app scaffolding unless the user asks for that lifecycle step.
+This file covers source, tests, docs, package graph changes, app target changes, repo-maintenance scripts, and planning work in this SwiftPM package. It does not by itself authorize release, publish, protected-main merge, or new Xcode app scaffolding unless the user asks for that lifecycle step.
 
 ### Where To Look First
 
 - `Package.swift` is the source of truth for products, targets, dependencies, platforms, and Swift language mode.
 - `README.md` is the product overview and quick-start surface.
 - `ROADMAP.md` is the milestone and backlog source of truth.
+- `Apps/SwiftMonocleApp/project.yml` is the XcodeGen source of truth for the macOS app shell.
 - `docs/maintainers/` contains architecture and planning notes.
 - `scripts/repo-maintenance/validate-all.sh` is the local maintainer validation entrypoint.
 
-## Repository Expectations
+### Repository Expectations
 
 - Use Swift Package Manager (SPM) as the source of truth for package structure and dependencies.
 - Use `sync-swift-package-guidance` if this repo's package-specific `AGENTS.md` guidance later drifts and needs to be refreshed or merged forward.
@@ -46,7 +47,7 @@ Keep changes coherent and grounded in the current package shape. If a change nee
 
 ### Source of Truth
 
-Keep reusable model, graph, parsing, bridge, and control-plane logic in Swift package targets. Future macOS app lifecycle, signing, assets, extension targets, and UI validation belong behind an explicit Xcode app boundary.
+Keep reusable model, graph, parsing, bridge, and control-plane logic in Swift package targets. macOS app lifecycle, signing, assets, extension targets, and UI validation belong behind the explicit Xcode app boundary.
 
 ### Communication and Escalation
 
@@ -94,7 +95,7 @@ A change is done when the relevant source, tests, docs, package graph, and maint
 ### Never Do
 
 - Do not commit secrets, tokens, `.env` files, or machine-local dependency paths.
-- Do not add a future Xcode app project, Source Editor Extension, host process, or daemon as a side effect of an unrelated package update.
+- Do not add a new Xcode app project, Source Editor Extension, host process, or daemon as a side effect of an unrelated package update.
 - Do not claim UI accessibility, runtime, release, or public API stability that has not been implemented and verified.
 
 ### Ask Before
@@ -106,7 +107,7 @@ A change is done when the relevant source, tests, docs, package graph, and maint
 ## Local Overrides
 
 - `.codex/` is tracked in this repository for repo-local Codex configuration and action environments. Do not put secrets, tokens, or machine-local credentials there.
-- Treat `docs/maintainers/macos-frontend-plan.md` as the current planning artifact for the future macOS app frontend.
+- Treat `docs/maintainers/macos-frontend-plan.md` as the current planning artifact for the macOS app frontend.
 
 ## Swift Coding Preferences
 

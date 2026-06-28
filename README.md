@@ -5,14 +5,14 @@ SwiftMonocle is an early macOS-first Swift package for building scoped, syntax-a
 ## Table of Contents
 
 - [Overview](#overview)
-- [Requirements](#requirements)
 - [Quick Start](#quick-start)
 - [Usage](#usage)
-- [Package Surface](#package-surface)
 - [Development](#development)
 - [Repo Structure](#repo-structure)
 - [Release Notes](#release-notes)
 - [License](#license)
+- [Requirements](#requirements)
+- [Package Surface](#package-surface)
 - [Local Codex Setup](#local-codex-setup)
 - [Planning](#planning)
 
@@ -40,7 +40,7 @@ What does not exist yet is just as important:
 - there is no docs engine yet
 - there is no Xcode bridge yet
 - there is no Codex-facing bridge yet
-- there is no macOS app frontend yet
+- the macOS app frontend is only a bootstrap shell with static graph data
 - the public API is not stable
 
 Expect rapid changes, missing features, rough edges, and frequent restructuring while the first real product slice gets nailed down.
@@ -50,11 +50,6 @@ Expect rapid changes, missing features, rough edges, and frequent restructuring 
 The project is centered on a single canonical `CodeScopeSnapshot` model that can merge editor context, syntax-derived symbols, diagnostics, documentation, and agent state into one bounded working view.
 
 The intended product boundary is not "give an agent the whole repository and hope for the best." It is to give both the user and the agent one shared, inspectable, provenance-aware snapshot of the current coding moment.
-
-## Requirements
-
-- macOS 15 or newer
-- Swift 6.3 or newer
 
 ## Quick Start
 
@@ -76,6 +71,12 @@ Run the repo-maintenance validation wrapper:
 scripts/repo-maintenance/validate-all.sh
 ```
 
+Regenerate the macOS app project after editing `Apps/SwiftMonocleApp/project.yml`:
+
+```bash
+xcodegen generate --spec Apps/SwiftMonocleApp/project.yml
+```
+
 Passing builds and tests mean the current prototype is internally consistent. They do not mean the package is feature-complete or ready for external adoption.
 
 ## Usage
@@ -83,19 +84,6 @@ Passing builds and tests mean the current prototype is internally consistent. Th
 The package is not ready for external production use yet. The current useful integration surface is the package test suite and the early library products described below.
 
 For now, treat `SwiftMonocleCore` as the source of the shared snapshot model and `SwiftMonocleCodeScope` as the first implemented scope-building surface. The umbrella `SwiftMonocle` product re-exports the current code-scope surface for experiments.
-
-## Package Surface
-
-The package currently exposes three library products:
-
-- `SwiftMonocle`
-  - umbrella surface that currently re-exports `SwiftMonocleCodeScope`
-- `SwiftMonocleCore`
-  - shared snapshot identity, provenance, reference, and scope model types
-- `SwiftMonocleCodeScope`
-  - `CodeScopeInput`, `CodeScopeBuilder`, and the first syntax-driven symbol extraction logic
-
-`SwiftMonocleCodeScope` currently depends on [`swift-syntax`](https://github.com/swiftlang/swift-syntax) for phase-1 declaration extraction from active editor buffers.
 
 ## Development
 
@@ -148,6 +136,26 @@ Use `scripts/repo-maintenance/release.sh --mode standard --version vX.Y.Z` only 
 
 No license file has been added to this repository yet. Until a license is chosen and checked in, treat the project as private and not redistributable.
 
+## Requirements
+
+- macOS 15 or newer
+- Swift 6.3 or newer
+- Xcode 26 or newer for the app target
+- XcodeGen 2.39.0 or newer for regenerating `Apps/SwiftMonocleApp/SwiftMonocleApp.xcodeproj`
+
+## Package Surface
+
+The package currently exposes three library products:
+
+- `SwiftMonocle`
+  - umbrella surface that currently re-exports `SwiftMonocleCodeScope`
+- `SwiftMonocleCore`
+  - shared snapshot identity, provenance, reference, and scope model types
+- `SwiftMonocleCodeScope`
+  - `CodeScopeInput`, `CodeScopeBuilder`, and the first syntax-driven symbol extraction logic
+
+`SwiftMonocleCodeScope` currently depends on [`swift-syntax`](https://github.com/swiftlang/swift-syntax) for phase-1 declaration extraction from active editor buffers.
+
 ## Local Codex Setup
 
 The `.codex/` directory is tracked for repo-local Codex configuration and action environments.
@@ -163,5 +171,6 @@ The most useful current maintainer docs are:
 - [`docs/maintainers/architecture.md`](./docs/maintainers/architecture.md)
 - [`docs/maintainers/open-questions.md`](./docs/maintainers/open-questions.md)
 - [`docs/maintainers/codescope-snapshot.md`](./docs/maintainers/codescope-snapshot.md)
+- [`docs/maintainers/macos-frontend-plan.md`](./docs/maintainers/macos-frontend-plan.md)
 
 Treat the roadmap plus those maintainer docs as the source of truth for what the repository has already decided versus what is still exploratory.

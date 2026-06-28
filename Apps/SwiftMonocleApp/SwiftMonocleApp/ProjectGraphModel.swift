@@ -23,14 +23,14 @@ enum ProjectGraphNodeKind: String, Sendable, CaseIterable {
     case product
     case libraryTarget
     case testTarget
-    case futureAppTarget
+    case appTarget
 
     var label: String {
         switch self {
         case .product: "Product"
         case .libraryTarget: "Library Target"
         case .testTarget: "Test Target"
-        case .futureAppTarget: "App Target"
+        case .appTarget: "App Target"
         }
     }
 
@@ -39,7 +39,7 @@ enum ProjectGraphNodeKind: String, Sendable, CaseIterable {
         case .product: "shippingbox"
         case .libraryTarget: "square.stack.3d.up"
         case .testTarget: "checkmark.seal"
-        case .futureAppTarget: "macwindow"
+        case .appTarget: "macwindow"
         }
     }
 }
@@ -70,7 +70,7 @@ extension ProjectGraphModel {
             ),
             ProjectGraphNode(
                 name: "SwiftMonocleApp",
-                kind: .futureAppTarget,
+                kind: .appTarget,
                 summary: "macOS app shell for dependency graph and API visualization."
             ),
         ],
