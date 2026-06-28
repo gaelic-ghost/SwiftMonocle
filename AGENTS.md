@@ -105,7 +105,7 @@ A change is done when the relevant source, tests, docs, package graph, and maint
 
 ## Local Overrides
 
-- `.codex/` is ignored in this repository, so local Codex environment files created by guidance sync are currently developer-local setup unless tracking policy changes.
+- `.codex/` is tracked in this repository for repo-local Codex configuration and action environments. Do not put secrets, tokens, or machine-local credentials there.
 - Treat `docs/maintainers/macos-frontend-plan.md` as the current planning artifact for the future macOS app frontend.
 
 ## Swift Coding Preferences

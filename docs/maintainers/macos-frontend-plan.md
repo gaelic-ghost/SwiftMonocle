@@ -41,6 +41,45 @@ The simpler extension path considered first was adding only more package targets
 - `SwiftMonocleXcodeExtension`: future Source Editor Extension target when command-first editor integration is ready
 - app-specific UI tests, accessibility checks, preview assets, and signing configuration
 
+## Proposed Directory Layout
+
+The planned app target should make the Xcode-owned surface obvious while leaving package libraries at the repository root:
+
+```text
+.
+├── Package.swift
+├── SwiftMonocle.xcworkspace
+├── Apps/
+│   └── SwiftMonocleApp/
+│       ├── SwiftMonocleApp.xcodeproj
+│       ├── SwiftMonocleApp/
+│       │   ├── SwiftMonocleApp.swift
+│       │   ├── Scenes/
+│       │   ├── Views/
+│       │   ├── Commands/
+│       │   ├── Assets.xcassets/
+│       │   └── Info.plist
+│       ├── SwiftMonocleAppTests/
+│       └── SwiftMonocleAppUITests/
+├── Extensions/
+│   └── SwiftMonocleXcodeExtension/
+│       ├── SwiftMonocleXcodeExtension/
+│       └── SwiftMonocleXcodeExtensionTests/
+├── Sources/
+│   ├── SwiftMonocle/
+│   ├── SwiftMonocleCore/
+│   ├── SwiftMonocleCodeScope/
+│   ├── SwiftMonocleGraph/
+│   ├── SwiftMonocleControlPlane/
+│   └── SwiftMonocleUI/
+├── Tests/
+├── docs/
+├── scripts/
+└── .codex/
+```
+
+`Apps/` is the app lifecycle and signing boundary. `Extensions/` is reserved for the Xcode Source Editor Extension so it does not get mixed into the package library tree. The root workspace ties those Xcode surfaces to the SwiftPM package, while `Package.swift` remains the source of truth for reusable code and tests.
+
 ## First App Slice
 
 The first app should visualize static package structure before trying to be an always-on Xcode companion.

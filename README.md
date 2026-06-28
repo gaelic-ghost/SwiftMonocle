@@ -146,7 +146,7 @@ No license file has been added to this repository yet. Until a license is chosen
 
 ## Local Codex Setup
 
-The `.codex/` directory is ignored in this repository. Local Codex config and environment files may exist there for developer setup, but they are not part of the committed project state.
+The `.codex/` directory is tracked for repo-local Codex configuration and action environments.
 
 Use the installed Apple and productivity skills from the active Codex environment for Swift package guidance and repo-maintenance refreshes.
 
