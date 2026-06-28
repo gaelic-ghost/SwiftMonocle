@@ -1,0 +1,73 @@
+name: SwiftMonocleApp
+options:
+  minimumXcodeGenVersion: 2.39.0
+  deploymentTarget:
+    macOS: "26.0"
+  groupSortPosition: top
+  generateEmptyDirectories: true
+packages:
+  SwiftMonocle:
+    path: ../..
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+    SWIFT_STRICT_CONCURRENCY: complete
+    MACOSX_DEPLOYMENT_TARGET: 26.0
+configs:
+  Debug: debug
+  Release: release
+targets:
+  SwiftMonocleApp:
+    type: application
+    platform: macOS
+    sources:
+      - path: SwiftMonocleApp
+    info:
+      path: SwiftMonocleApp/Info.plist
+      properties:
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundleDisplayName: SwiftMonocle
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.developer-tools
+    dependencies:
+      - package: SwiftMonocle
+        product: SwiftMonocle
+      - package: SwiftMonocle
+        product: SwiftMonocleCore
+    settings:
+      configFiles:
+        Debug: Configurations/App-Debug.xcconfig
+        Release: Configurations/App-Release.xcconfig
+    scheme:
+      testTargets:
+        - SwiftMonocleAppTests
+  SwiftMonocleAppTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: SwiftMonocleAppTests
+    info:
+      path: SwiftMonocleAppTests/Info.plist
+      properties:
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+    dependencies:
+      - target: SwiftMonocleApp
+    settings:
+      configFiles:
+        Debug: Configurations/Tests-Debug.xcconfig
+        Release: Configurations/Tests-Release.xcconfig
+schemes:
+  SwiftMonocleApp:
+    build:
+      targets:
+        SwiftMonocleApp: all
+    test:
+      targets:
+        - SwiftMonocleAppTests
+    run:
+      config: Debug
+    archive:
+      config: Release

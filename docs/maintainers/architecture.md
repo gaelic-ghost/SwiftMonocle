@@ -29,9 +29,27 @@ The recommended shape is:
 
 This keeps the code modular without paying the coordination cost of too many process boundaries before the seams are proven.
 
-## Recommended package graph
+## Current implemented package graph
 
-### Core packages
+The repository already ships three package products:
+
+- `SwiftMonocleCore`
+  - shared snapshot identity, provenance, reference, and scope model types
+- `SwiftMonocleCodeScope`
+  - `CodeScopeInput`, `CodeScopeBuilder`, and the first `SwiftSyntax`-derived symbol extraction path
+- `SwiftMonocle`
+  - umbrella surface that currently re-exports `SwiftMonocleCodeScope`
+
+That means the architecture is no longer purely aspirational. The current codebase has already committed to:
+
+- one canonical `CodeScopeSnapshot` model
+- one input-normalization layer
+- one scope-construction layer
+- syntax-first symbol extraction as the first semantic source
+
+## Recommended next package graph
+
+### Next package libraries
 
 - `SwiftMonocleCore`
   - shared IDs, snapshots, events, errors, transport-neutral models
@@ -50,7 +68,7 @@ This keeps the code modular without paying the coordination cost of too many pro
 - `SwiftMonocleServer`
   - the main Hummingbird host exposing the curated MCP surface
 
-### Later non-package targets
+### Later companion-app targets
 
 These should likely live in a companion app/workspace rather than inside pure SwiftPM alone:
 
@@ -96,7 +114,9 @@ The current recommendation is to split into separate processes only if one of th
 
 SwiftMonocle should center on one canonical scope model. The user, Xcode bridge, docs engine, control plane, and hosted agent should all derive from the same internal view rather than each building their own.
 
-### Recommended scope types
+This is already true in the current codebase for the phase-1 scope surface: `CodeScopeSnapshot` is the source-of-truth model and `CodeScopeBuilder` is the current assembly point.
+
+### Current scope types
 
 - `EditorScope`
   - open file, current selections, cursor position, visible range, editing buffer metadata
@@ -110,6 +130,8 @@ SwiftMonocle should center on one canonical scope model. The user, Xcode bridge,
   - active thread or session, approvals, pending actions, status, output summaries
 
 Everything else should be composed from those instead of introducing parallel truth sources.
+
+The current implementation already includes those top-level scope families in `SwiftMonocleCore`, even though several of them are still fed by placeholder or future adapter paths rather than live runtime integrations.
 
 ## Xcode integration stance
 
@@ -182,11 +204,18 @@ The docs engine should begin narrowly.
 - `SwiftSyntax` alone may not provide enough semantic fidelity for the best scope model
 - the docs engine could sprawl before its actual retrieval and ranking model is proven
 
-## Recommended first milestone
+## Recommended next milestone
+
+The original first milestone has been partially completed already:
 
 1. Define the shared core scope model.
-2. Build the first local Hummingbird host.
-3. Ingest editor context plus Xcode MCP context into one internal state model.
-4. Expose one curated MCP surface to the hosted agent.
-5. Add docs ranking as an internal subsystem.
-6. Leave the richer app UI and extension-heavy workflows for the next layer once the scope model feels real.
+2. Define the first scope-input normalization layer.
+3. Add syntax-first symbol extraction and ranking.
+
+The next concrete milestone should be:
+
+1. Build the first local host around the existing package surfaces.
+2. Ingest live editor context plus Xcode MCP context into the existing internal state model.
+3. Expose one curated outward-facing scope surface to a hosted agent or UI consumer.
+4. Add docs ranking as an internal subsystem.
+5. Leave the richer app UI and extension-heavy workflows for the next layer once the scope model and host feel real.

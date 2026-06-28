@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1FF70692B05D0F09AC7E26D7 /* ProjectGraphModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143DDBD7D576B72D8A222420 /* ProjectGraphModelTests.swift */; };
+		26E36C6E91C56CF327F1A010 /* ProjectGraphDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619511545447EBBE9CFCF7D9 /* ProjectGraphDashboard.swift */; };
+		32CBE20ECEF5232B12AC82D1 /* SwiftMonocleCore in Frameworks */ = {isa = PBXBuildFile; productRef = EFC26BB581F08E59CFF12F84 /* SwiftMonocleCore */; };
+		5C0E6306316DDD3E437411B0 /* SwiftMonocle in Frameworks */ = {isa = PBXBuildFile; productRef = AA2F36DEAFBC447E1DD1DD01 /* SwiftMonocle */; };
+		733B6E002671CEA77CDC611F /* SwiftMonocleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586C2FEA41F65BCC2127C145 /* SwiftMonocleApp.swift */; };
+		916FE71A43031B9D8C491DED /* ProjectGraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0310378E2EFD221F16BE187 /* ProjectGraphModel.swift */; };
+		B945A930FC32052C4A76A988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 597A2D6F27795BCF7C489F0D /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F3914BC90826C9D477FA46CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46AA306E837761F9C1E2D8AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D59CEEED979155E72C5CE5CA;
+			remoteInfo = SwiftMonocleApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1266F1195484E09D09191737 /* SwiftMonocleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMonocleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		143DDBD7D576B72D8A222420 /* ProjectGraphModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGraphModelTests.swift; sourceTree = "<group>"; };
+		3A7E06B941E8ED32C8BB6BFB /* SwiftMonocleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMonocleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		586C2FEA41F65BCC2127C145 /* SwiftMonocleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMonocleApp.swift; sourceTree = "<group>"; };
+		597A2D6F27795BCF7C489F0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		619511545447EBBE9CFCF7D9 /* ProjectGraphDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGraphDashboard.swift; sourceTree = "<group>"; };
+		8A9E556A2CDA04FCA1A77B98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DAEA767B10EB59EC605624D0 /* SwiftMonocle */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftMonocle; path = ../..; sourceTree = SOURCE_ROOT; };
+		E0310378E2EFD221F16BE187 /* ProjectGraphModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGraphModel.swift; sourceTree = "<group>"; };
+		E93414DF0C34DB95F2C867F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8B1A7D4C0F2741AD5261798A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C0E6306316DDD3E437411B0 /* SwiftMonocle in Frameworks */,
+				32CBE20ECEF5232B12AC82D1 /* SwiftMonocleCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		250D27E80ABEFA13CB715123 /* SwiftMonocleAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				E93414DF0C34DB95F2C867F6 /* Info.plist */,
+				143DDBD7D576B72D8A222420 /* ProjectGraphModelTests.swift */,
+			);
+			path = SwiftMonocleAppTests;
+			sourceTree = "<group>";
+		};
+		4FCAB4DB9D48954E07D867B2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				DAEA767B10EB59EC605624D0 /* SwiftMonocle */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		8B73456BDEDC77227DB07DFF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E06B941E8ED32C8BB6BFB /* SwiftMonocleApp.app */,
+				1266F1195484E09D09191737 /* SwiftMonocleAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B367860D19C4C165838D0D3C /* SwiftMonocleApp */ = {
+			isa = PBXGroup;
+			children = (
+				597A2D6F27795BCF7C489F0D /* Assets.xcassets */,
+				8A9E556A2CDA04FCA1A77B98 /* Info.plist */,
+				619511545447EBBE9CFCF7D9 /* ProjectGraphDashboard.swift */,
+				E0310378E2EFD221F16BE187 /* ProjectGraphModel.swift */,
+				586C2FEA41F65BCC2127C145 /* SwiftMonocleApp.swift */,
+			);
+			path = SwiftMonocleApp;
+			sourceTree = "<group>";
+		};
+		FA161C70065CB6098E8DE570 = {
+			isa = PBXGroup;
+			children = (
+				4FCAB4DB9D48954E07D867B2 /* Packages */,
+				B367860D19C4C165838D0D3C /* SwiftMonocleApp */,
+				250D27E80ABEFA13CB715123 /* SwiftMonocleAppTests */,
+				8B73456BDEDC77227DB07DFF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C46BFB15196FA1A8CB66933F /* SwiftMonocleAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C8EC3D268213B4CA6D975B48 /* Build configuration list for PBXNativeTarget "SwiftMonocleAppTests" */;
+			buildPhases = (
+				9FE1BF93EA82AECD621FBB40 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				379D2C4A5B7FD232E79F0B46 /* PBXTargetDependency */,
+			);
+			name = SwiftMonocleAppTests;
+			packageProductDependencies = (
+			);
+			productName = SwiftMonocleAppTests;
+			productReference = 1266F1195484E09D09191737 /* SwiftMonocleAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D59CEEED979155E72C5CE5CA /* SwiftMonocleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF28566717047B3DF23D1731 /* Build configuration list for PBXNativeTarget "SwiftMonocleApp" */;
+			buildPhases = (
+				569B4060A676468E37FD0C53 /* Sources */,
+				96F5FA81FDA599F8DCF68D41 /* Resources */,
+				8B1A7D4C0F2741AD5261798A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftMonocleApp;
+			packageProductDependencies = (
+				AA2F36DEAFBC447E1DD1DD01 /* SwiftMonocle */,
+				EFC26BB581F08E59CFF12F84 /* SwiftMonocleCore */,
+			);
+			productName = SwiftMonocleApp;
+			productReference = 3A7E06B941E8ED32C8BB6BFB /* SwiftMonocleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46AA306E837761F9C1E2D8AD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = E556A4B453E2275FB41B522B /* Build configuration list for PBXProject "SwiftMonocleApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FA161C70065CB6098E8DE570;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BD0FDABBC1FF3F2F50423CF5 /* XCLocalSwiftPackageReference "../.." */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8B73456BDEDC77227DB07DFF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D59CEEED979155E72C5CE5CA /* SwiftMonocleApp */,
+				C46BFB15196FA1A8CB66933F /* SwiftMonocleAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		96F5FA81FDA599F8DCF68D41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B945A930FC32052C4A76A988 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		569B4060A676468E37FD0C53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26E36C6E91C56CF327F1A010 /* ProjectGraphDashboard.swift in Sources */,
+				916FE71A43031B9D8C491DED /* ProjectGraphModel.swift in Sources */,
+				733B6E002671CEA77CDC611F /* SwiftMonocleApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FE1BF93EA82AECD621FBB40 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FF70692B05D0F09AC7E26D7 /* ProjectGraphModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		379D2C4A5B7FD232E79F0B46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D59CEEED979155E72C5CE5CA /* SwiftMonocleApp */;
+			targetProxy = F3914BC90826C9D477FA46CE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		570018947B2764BDEF3D3DE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		835AFF303AB43E43B432B21E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMonocleAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftMonocleApp.app/Contents/MacOS/SwiftMonocleApp";
+				configFiles = "[\"Debug\": \"Configurations/Tests-Debug.xcconfig\", \"Release\": \"Configurations/Tests-Release.xcconfig\"]";
+			};
+			name = Release;
+		};
+		8A92CAC0F9CBEE1F8C04BB69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMonocleAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftMonocleApp.app/Contents/MacOS/SwiftMonocleApp";
+				configFiles = "[\"Debug\": \"Configurations/Tests-Debug.xcconfig\", \"Release\": \"Configurations/Tests-Release.xcconfig\"]";
+			};
+			name = Debug;
+		};
+		A1C57F8D5813CCF36814609B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		C458B3C61B6D32CA8F5C5660 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMonocleApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+				configFiles = "[\"Release\": \"Configurations/App-Release.xcconfig\", \"Debug\": \"Configurations/App-Debug.xcconfig\"]";
+			};
+			name = Debug;
+		};
+		C7BB5D60CE299098CBD25A9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMonocleApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+				configFiles = "[\"Release\": \"Configurations/App-Release.xcconfig\", \"Debug\": \"Configurations/App-Debug.xcconfig\"]";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF28566717047B3DF23D1731 /* Build configuration list for PBXNativeTarget "SwiftMonocleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C458B3C61B6D32CA8F5C5660 /* Debug */,
+				C7BB5D60CE299098CBD25A9C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C8EC3D268213B4CA6D975B48 /* Build configuration list for PBXNativeTarget "SwiftMonocleAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A92CAC0F9CBEE1F8C04BB69 /* Debug */,
+				835AFF303AB43E43B432B21E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E556A4B453E2275FB41B522B /* Build configuration list for PBXProject "SwiftMonocleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				570018947B2764BDEF3D3DE5 /* Debug */,
+				A1C57F8D5813CCF36814609B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		BD0FDABBC1FF3F2F50423CF5 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA2F36DEAFBC447E1DD1DD01 /* SwiftMonocle */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftMonocle;
+		};
+		EFC26BB581F08E59CFF12F84 /* SwiftMonocleCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftMonocleCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 46AA306E837761F9C1E2D8AD /* Project object */;
+}

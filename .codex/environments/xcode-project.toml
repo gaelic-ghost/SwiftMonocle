@@ -1,0 +1,26 @@
+# Keep DerivedData inside the worktree so Codex GUI worktree validation is isolated.
+version = 1
+name = "xcode-project"
+
+[setup]
+script = "xcodebuild -project Apps/SwiftMonocleApp/SwiftMonocleApp.xcodeproj -scheme SwiftMonocleApp -destination 'platform=macOS' -derivedDataPath ./DerivedData CODE_SIGNING_ALLOWED=NO -resolvePackageDependencies"
+
+[[actions]]
+name = "resolve packages"
+icon = "tool"
+command = "xcodebuild -project Apps/SwiftMonocleApp/SwiftMonocleApp.xcodeproj -scheme SwiftMonocleApp -destination 'platform=macOS' -derivedDataPath ./DerivedData CODE_SIGNING_ALLOWED=NO -resolvePackageDependencies"
+
+[[actions]]
+name = "generate project"
+icon = "tool"
+command = "xcodegen generate --spec Apps/SwiftMonocleApp/project.yml"
+
+[[actions]]
+name = "build"
+icon = "tool"
+command = "xcodebuild -project Apps/SwiftMonocleApp/SwiftMonocleApp.xcodeproj -scheme SwiftMonocleApp -destination 'platform=macOS' -derivedDataPath ./DerivedData CODE_SIGNING_ALLOWED=NO build"
+
+[[actions]]
+name = "test"
+icon = "tool"
+command = "xcodebuild -project Apps/SwiftMonocleApp/SwiftMonocleApp.xcodeproj -scheme SwiftMonocleApp -destination 'platform=macOS' -derivedDataPath ./DerivedData CODE_SIGNING_ALLOWED=NO test"
