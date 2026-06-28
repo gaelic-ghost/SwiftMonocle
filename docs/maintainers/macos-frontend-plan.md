@@ -12,6 +12,22 @@ Add the macOS frontend as a companion Xcode app workspace after the first host/c
 
 This is a durable building-block direction, not a stopgap. The practical effect is that reusable graph extraction, API indexing, scope modeling, and control-plane snapshots stay in Swift package targets, while the Xcode project owns app lifecycle, entitlements, windows, previews, assets, extension targets, signing, and UI-specific validation.
 
+## Current Scaffold
+
+The first XcodeGen-backed macOS 26+ app shell now lives in `Apps/SwiftMonocleApp`.
+
+It currently provides:
+
+- `SwiftMonocle.xcworkspace` at the repository root
+- `Apps/SwiftMonocleApp/project.yml` as the XcodeGen source of truth
+- checked-in `.xcconfig` files for app and test build settings
+- a SwiftUI `SwiftMonocleApp` entry point with a first graph dashboard window
+- a static package graph model linked against `SwiftMonocle` and `SwiftMonocleCore`
+- Swift Testing coverage for the bootstrap graph model
+- `.codex/environments/xcode-project.toml` actions for project generation, build, and test
+
+The scaffold is intentionally static. Real package graph extraction should move into a reusable package target before the app depends on live package parsing or indexing behavior.
+
 ## Why Not Put Everything In The Package Manifest
 
 SwiftPM should remain the source of truth for reusable libraries, tests, and command-line validation. A rich macOS app needs Xcode-managed concerns that SwiftPM alone does not model well:

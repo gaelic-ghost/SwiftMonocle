@@ -116,6 +116,10 @@ Formatting and linting configuration now lives in `.swiftformat` and `.swiftlint
 ```text
 .
 ├── Package.swift
+├── SwiftMonocle.xcworkspace
+├── Apps/
+│   └── SwiftMonocleApp/
+├── Extensions/
 ├── Sources/
 │   ├── SwiftMonocle/
 │   ├── SwiftMonocleCore/
@@ -132,7 +136,7 @@ Formatting and linting configuration now lives in `.swiftformat` and `.swiftlint
 └── ROADMAP.md
 ```
 
-`Package.swift` is the package graph source of truth. `docs/maintainers` contains architecture and planning notes, including the macOS frontend plan. `scripts/repo-maintenance` contains the managed local validation, sync, and release helpers.
+`Package.swift` is the package graph source of truth. `Apps/SwiftMonocleApp` contains the XcodeGen-backed macOS app shell. `Extensions` is reserved for future Xcode extension targets. `docs/maintainers` contains architecture and planning notes, including the macOS frontend plan. `scripts/repo-maintenance` contains the managed local validation, sync, and release helpers.
 
 ## Release Notes
 

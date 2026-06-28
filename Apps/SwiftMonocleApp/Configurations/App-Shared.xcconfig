@@ -1,0 +1,7 @@
+// Shared non-secret app build settings.
+PRODUCT_BUNDLE_IDENTIFIER = com.gaelicghost.SwiftMonocle
+PRODUCT_NAME = SwiftMonocle
+MARKETING_VERSION = 0.1.0
+CURRENT_PROJECT_VERSION = 1
+MACOSX_DEPLOYMENT_TARGET = 26.0
+CODE_SIGN_STYLE = Automatic

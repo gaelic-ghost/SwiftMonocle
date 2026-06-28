@@ -29,7 +29,7 @@
 - Milestone 0: Foundation - Completed
 - Milestone 1: Product Definition - In Progress
 - Milestone 2: First Integrated Scope Pipeline - Planned
-- Milestone 3: macOS Frontend Planning - Planned
+- Milestone 3: macOS Frontend Planning - In Progress
 
 ## Milestone 0: Foundation
 
@@ -110,27 +110,27 @@ Planned
 
 ### Status
 
-Planned
+In Progress
 
 ### Scope
 
 - [ ] Add package-level graph primitives for products, targets, source files, symbols, and API relationships.
 - [ ] Add an API-outline projection using the existing syntax extraction path.
-- [ ] Add a companion macOS Xcode app workspace after the package graph/control-plane boundary is clear.
+- [x] Add a companion macOS Xcode app workspace after the package graph/control-plane boundary is clear.
 - [ ] Visualize the package target/product graph and selected API/symbol outline.
 - [ ] Define accessibility acceptance criteria for graph navigation, selection, search, and inspector state.
 
 ### Tickets
 
 - [ ] Decide whether `SwiftMonocleGraph` starts as a new package target or stays in `SwiftMonocleCore` until graph behavior grows.
-- [ ] Decide whether the app project is checked in directly or generated from a project specification.
-- [ ] Build a static package graph prototype for this repository.
-- [ ] Build the first app window around graph browser, outline, and inspector panels.
+- [x] Decide whether the app project is checked in directly or generated from a project specification.
+- [x] Build a static package graph prototype for this repository.
+- [x] Build the first app window around graph browser, outline, and inspector panels.
 - [ ] Validate keyboard and VoiceOver navigation before treating the graph UI as shippable.
 
 ### Exit Criteria
 
-- [ ] A maintainer can open the app and inspect SwiftMonocle's package dependency graph.
+- [x] A maintainer can open the app and inspect SwiftMonocle's package dependency graph.
 - [ ] Selecting a graph node shows source-backed details and related tests where available.
 - [ ] Reusable graph extraction stays covered by Swift package tests.
 - [ ] App-only lifecycle, signing, assets, and UI validation stay in the Xcode app boundary.
@@ -152,3 +152,4 @@ Planned
 ## History
 
 - 2026-06-28: Refreshed repo-maintenance guidance and added the macOS frontend integration plan.
+- 2026-06-28: Bootstrapped the macOS 26+ XcodeGen app shell under `Apps/SwiftMonocleApp`.
