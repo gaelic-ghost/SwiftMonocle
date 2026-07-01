@@ -20,8 +20,9 @@ struct ProjectGraphModel: Sendable {
         }
         self.edges = packageGraph.edges.map { edge in
             ProjectGraphEdge(
-                source: packageGraph.node(id: edge.source)?.name ?? edge.source.rawValue,
-                target: packageGraph.node(id: edge.target)?.name ?? edge.target.rawValue
+                id: edge.id.rawValue,
+                source: qualifiedLabel(for: packageGraph.node(id: edge.source), fallback: edge.source.rawValue),
+                target: qualifiedLabel(for: packageGraph.node(id: edge.target), fallback: edge.target.rawValue)
             )
         }
         self.snapshot = snapshot
@@ -77,9 +78,15 @@ enum ProjectGraphNodeKind: String, Sendable, CaseIterable {
 }
 
 struct ProjectGraphEdge: Sendable, Identifiable, Hashable {
-    var id: String { "\(source)->\(target)" }
+    var id: String
     var source: String
     var target: String
+
+    init(id: String, source: String, target: String) {
+        self.id = id
+        self.source = source
+        self.target = target
+    }
 }
 
 extension ProjectGraphModel {
@@ -100,4 +107,9 @@ extension ProjectGraphModel {
             ]
         )
     )
+}
+
+private func qualifiedLabel(for node: PackageGraphNode?, fallback: String) -> String {
+    guard let node else { return fallback }
+    return "\(node.name) [\(ProjectGraphNodeKind(node.kind).label)]"
 }
