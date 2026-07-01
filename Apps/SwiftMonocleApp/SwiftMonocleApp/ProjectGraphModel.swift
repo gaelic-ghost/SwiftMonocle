@@ -1,10 +1,31 @@
 import Foundation
 import SwiftMonocleCore
+import SwiftMonocleGraph
 
 struct ProjectGraphModel: Sendable {
     var nodes: [ProjectGraphNode]
     var edges: [ProjectGraphEdge]
     var snapshot: CodeScopeSnapshot
+
+    init(packageGraph: PackageGraph, snapshot: CodeScopeSnapshot) {
+        self.nodes = packageGraph.nodes.map { node in
+            ProjectGraphNode(
+                id: node.id.rawValue,
+                name: node.name,
+                kind: ProjectGraphNodeKind(node.kind),
+                sourcePath: node.sourcePath,
+                summary: node.summary,
+                relatedTests: packageGraph.relatedTests(for: node.id).map(\.name)
+            )
+        }
+        self.edges = packageGraph.edges.map { edge in
+            ProjectGraphEdge(
+                source: packageGraph.node(id: edge.source)?.name ?? edge.source.rawValue,
+                target: packageGraph.node(id: edge.target)?.name ?? edge.target.rawValue
+            )
+        }
+        self.snapshot = snapshot
+    }
 
     func node(id: ProjectGraphNode.ID?) -> ProjectGraphNode? {
         guard let id else { return nil }
@@ -13,10 +34,12 @@ struct ProjectGraphModel: Sendable {
 }
 
 struct ProjectGraphNode: Sendable, Identifiable, Hashable {
-    var id: String { name }
+    var id: String
     var name: String
     var kind: ProjectGraphNodeKind
+    var sourcePath: String
     var summary: String
+    var relatedTests: [String]
 }
 
 enum ProjectGraphNodeKind: String, Sendable, CaseIterable {
@@ -42,6 +65,15 @@ enum ProjectGraphNodeKind: String, Sendable, CaseIterable {
         case .appTarget: "macwindow"
         }
     }
+
+    init(_ graphKind: PackageGraphNodeKind) {
+        switch graphKind {
+        case .product: self = .product
+        case .libraryTarget: self = .libraryTarget
+        case .testTarget: self = .testTarget
+        case .appTarget: self = .appTarget
+        }
+    }
 }
 
 struct ProjectGraphEdge: Sendable, Identifiable, Hashable {
@@ -52,34 +84,7 @@ struct ProjectGraphEdge: Sendable, Identifiable, Hashable {
 
 extension ProjectGraphModel {
     static let swiftMonocleBootstrap = ProjectGraphModel(
-        nodes: [
-            ProjectGraphNode(
-                name: "SwiftMonocle",
-                kind: .product,
-                summary: "Umbrella package product for the current code-scope surface."
-            ),
-            ProjectGraphNode(
-                name: "SwiftMonocleCore",
-                kind: .libraryTarget,
-                summary: "Shared snapshot identity, provenance, references, and scope models."
-            ),
-            ProjectGraphNode(
-                name: "SwiftMonocleCodeScope",
-                kind: .libraryTarget,
-                summary: "Syntax-backed scope extraction and CodeScopeInput assembly."
-            ),
-            ProjectGraphNode(
-                name: "SwiftMonocleApp",
-                kind: .appTarget,
-                summary: "macOS app shell for dependency graph and API visualization."
-            ),
-        ],
-        edges: [
-            ProjectGraphEdge(source: "SwiftMonocle", target: "SwiftMonocleCodeScope"),
-            ProjectGraphEdge(source: "SwiftMonocleCodeScope", target: "SwiftMonocleCore"),
-            ProjectGraphEdge(source: "SwiftMonocleApp", target: "SwiftMonocle"),
-            ProjectGraphEdge(source: "SwiftMonocleApp", target: "SwiftMonocleCore"),
-        ],
+        packageGraph: .swiftMonocleBootstrap,
         snapshot: CodeScopeSnapshot(
             reason: .manualRefresh,
             workspace: WorkspaceScope(

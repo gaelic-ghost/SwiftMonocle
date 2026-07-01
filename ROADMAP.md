@@ -122,22 +122,25 @@ In Progress
 
 ### Tickets
 
-- [ ] Decide whether `SwiftMonocleGraph` starts as a new package target or stays in `SwiftMonocleCore` until graph behavior grows.
+- [x] Decide whether `SwiftMonocleGraph` starts as a new package target or stays in `SwiftMonocleCore` until graph behavior grows.
+- [x] Add source-backed package/product/target graph primitives in `SwiftMonocleGraph`.
 - [x] Decide whether the app project is checked in directly or generated from a project specification.
 - [x] Build a static package graph prototype for this repository.
 - [x] Build the first app window around graph browser, outline, and inspector panels.
+- [x] Wire the app's bootstrap graph view to reusable `SwiftMonocleGraph` models.
 - [ ] Validate keyboard and VoiceOver navigation before treating the graph UI as shippable.
 
 ### Exit Criteria
 
 - [x] A maintainer can open the app and inspect SwiftMonocle's package dependency graph.
-- [ ] Selecting a graph node shows source-backed details and related tests where available.
-- [ ] Reusable graph extraction stays covered by Swift package tests.
+- [x] Selecting a graph node shows source-backed details and related tests where available.
+- [x] Reusable graph data structures stay covered by Swift package tests.
+- [ ] Live graph extraction stays covered by Swift package tests.
 - [ ] App-only lifecycle, signing, assets, and UI validation stay in the Xcode app boundary.
 
 ## Small Tickets
 
-- [ ] Add a `SwiftMonocleGraph` design note or extend the frontend plan once the graph target decision is made.
+- [x] Add a `SwiftMonocleGraph` design note or extend the frontend plan once the graph target decision is made.
 - [ ] Add release/license decisions before any public package publication.
 - [ ] Revisit `.codex/` tracking if repo-local Codex environment files should become committed project setup.
 
@@ -153,3 +156,4 @@ In Progress
 
 - 2026-06-28: Refreshed repo-maintenance guidance and added the macOS frontend integration plan.
 - 2026-06-28: Bootstrapped the macOS 26+ XcodeGen app shell under `Apps/SwiftMonocleApp`.
+- 2026-07-01: Added the `SwiftMonocleGraph` package target and wired the app's bootstrap graph to package-backed graph models.

@@ -21,6 +21,10 @@ let package = Package(
             name: "SwiftMonocleCodeScope",
             targets: ["SwiftMonocleCodeScope"]
         ),
+        .library(
+            name: "SwiftMonocleGraph",
+            targets: ["SwiftMonocleGraph"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "603.0.0"),
@@ -39,7 +43,10 @@ let package = Package(
         ),
         .target(
             name: "SwiftMonocle",
-            dependencies: ["SwiftMonocleCodeScope"]
+            dependencies: [
+                "SwiftMonocleCodeScope",
+                "SwiftMonocleGraph",
+            ]
         ),
         .testTarget(
             name: "SwiftMonocleTests",
@@ -52,6 +59,13 @@ let package = Package(
         .testTarget(
             name: "SwiftMonocleCodeScopeTests",
             dependencies: ["SwiftMonocleCodeScope"]
+        ),
+        .target(
+            name: "SwiftMonocleGraph"
+        ),
+        .testTarget(
+            name: "SwiftMonocleGraphTests",
+            dependencies: ["SwiftMonocleGraph"]
         ),
     ],
     swiftLanguageModes: [.v6]

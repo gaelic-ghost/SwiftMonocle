@@ -107,7 +107,16 @@ private struct NodeInspector: View {
             Section("Node") {
                 LabeledContent("Name", value: node.name)
                 LabeledContent("Kind", value: node.kind.label)
+                LabeledContent("Source", value: node.sourcePath)
                 LabeledContent("Summary", value: node.summary)
+            }
+
+            if !node.relatedTests.isEmpty {
+                Section("Related Tests") {
+                    ForEach(node.relatedTests, id: \.self) { testName in
+                        Text(testName)
+                    }
+                }
             }
 
             Section("Scope Snapshot") {

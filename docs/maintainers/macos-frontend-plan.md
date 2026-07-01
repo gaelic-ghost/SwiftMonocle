@@ -22,11 +22,12 @@ It currently provides:
 - `Apps/SwiftMonocleApp/project.yml` as the XcodeGen source of truth
 - checked-in `.xcconfig` files for app and test build settings
 - a SwiftUI `SwiftMonocleApp` entry point with a first graph dashboard window
-- a static package graph model linked against `SwiftMonocle` and `SwiftMonocleCore`
-- Swift Testing coverage for the bootstrap graph model
+- a package-backed bootstrap graph model linked against `SwiftMonocle`, `SwiftMonocleCore`, and `SwiftMonocleGraph`
+- source path and related-test details in the app inspector
+- Swift Testing coverage for the package graph model and the app graph adapter
 - `.codex/environments/xcode-project.toml` actions for project generation, build, and test
 
-The scaffold is intentionally static. Real package graph extraction should move into a reusable package target before the app depends on live package parsing or indexing behavior.
+The scaffold is intentionally fixture-backed. `SwiftMonocleGraph` now owns reusable package/product/target graph primitives and a source-backed fixture for this repository. Live package graph extraction should build on that target before the app depends on live package parsing or indexing behavior.
 
 ## Why Not Put Everything In The Package Manifest
 
@@ -47,7 +48,7 @@ The simpler extension path considered first was adding only more package targets
 
 - `SwiftMonocleCore`: shared snapshot, identity, provenance, references, and graph model primitives
 - `SwiftMonocleCodeScope`: syntax-first scope extraction and code-neighborhood construction
-- `SwiftMonocleGraph`: dependency graph, target graph, API graph, and graph projection models
+- `SwiftMonocleGraph`: package/product/target graph primitives now; dependency graph, API graph, and graph projection models as the target grows
 - `SwiftMonocleControlPlane`: app-facing immutable snapshots and async streams
 - `SwiftMonocleUI`: reusable SwiftUI graph, outline, inspector, and status components when they are useful outside the app target
 
@@ -135,7 +136,7 @@ This should follow the current Milestone 2 runtime/scope pipeline unless the vis
 
 Recommended sequencing:
 
-1. Add a package-level graph model and tests for package target/product relationships.
+1. Add a package-level graph model and tests for package target/product relationships. Done for the fixture-backed `SwiftMonocleGraph` slice.
 2. Add API-outline projection on top of the existing syntax extraction path.
 3. Add the companion Xcode app workspace with one graph browser window.
 4. Add accessibility and UI validation for graph navigation, search, selection, and inspector state.
@@ -143,7 +144,10 @@ Recommended sequencing:
 
 ## Open Decisions
 
-- Whether `SwiftMonocleGraph` should be a distinct package target or part of `SwiftMonocleCore` until graph behavior grows.
-- Whether the app should be checked in as a sibling Xcode project at the repo root or generated from a project specification.
 - Which graph rendering approach gives the best accessible fallback: custom SwiftUI layout, outline-plus-canvas hybrid, or a native outline/table-first UI with graph preview.
 - Whether live package reload belongs in the first app slice or waits for the host/control-plane milestone.
+
+## Decisions Made
+
+- `SwiftMonocleGraph` is a distinct package target so graph primitives can evolve without overloading `SwiftMonocleCore`.
+- The app project is generated from `Apps/SwiftMonocleApp/project.yml`, with the generated Xcode project checked in for normal Xcode use.
