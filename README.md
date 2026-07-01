@@ -31,6 +31,7 @@ The package now has:
 - a concrete `CodeScopeSnapshot` model in `SwiftMonocleCore`
 - a `SwiftMonocleCodeScope` target that assembles snapshots from editor, docs, diagnostics, and agent inputs
 - a first `SwiftSyntax`-backed symbol extractor that ranks focal, enclosing, and neighboring declarations from a live buffer
+- a `SwiftMonocleGraph` target with source-backed package/product/target graph primitives
 - package tests around the early input and scope-building surface
 - refreshed repo-maintenance scripts, SwiftFormat, and SwiftLint baseline configuration
 
@@ -40,7 +41,7 @@ What does not exist yet is just as important:
 - there is no docs engine yet
 - there is no Xcode bridge yet
 - there is no Codex-facing bridge yet
-- the macOS app frontend is only a bootstrap shell with static graph data
+- the macOS app frontend is only a bootstrap shell with package-backed graph fixture data
 - the public API is not stable
 
 Expect rapid changes, missing features, rough edges, and frequent restructuring while the first real product slice gets nailed down.
@@ -83,7 +84,7 @@ Passing builds and tests mean the current prototype is internally consistent. Th
 
 The package is not ready for external production use yet. The current useful integration surface is the package test suite and the early library products described below.
 
-For now, treat `SwiftMonocleCore` as the source of the shared snapshot model and `SwiftMonocleCodeScope` as the first implemented scope-building surface. The umbrella `SwiftMonocle` product re-exports the current code-scope surface for experiments.
+For now, treat `SwiftMonocleCore` as the source of the shared snapshot model, `SwiftMonocleCodeScope` as the first implemented scope-building surface, and `SwiftMonocleGraph` as the source of reusable package graph models. The umbrella `SwiftMonocle` product re-exports the current code-scope and graph surfaces for experiments.
 
 ## Development
 
@@ -111,7 +112,8 @@ Formatting and linting configuration now lives in `.swiftformat` and `.swiftlint
 ├── Sources/
 │   ├── SwiftMonocle/
 │   ├── SwiftMonocleCore/
-│   └── SwiftMonocleCodeScope/
+│   ├── SwiftMonocleCodeScope/
+│   └── SwiftMonocleGraph/
 ├── Tests/
 ├── docs/
 │   └── maintainers/
@@ -145,14 +147,16 @@ No license file has been added to this repository yet. Until a license is chosen
 
 ## Package Surface
 
-The package currently exposes three library products:
+The package currently exposes four library products:
 
 - `SwiftMonocle`
-  - umbrella surface that currently re-exports `SwiftMonocleCodeScope`
+  - umbrella surface that currently re-exports `SwiftMonocleCodeScope` and `SwiftMonocleGraph`
 - `SwiftMonocleCore`
   - shared snapshot identity, provenance, reference, and scope model types
 - `SwiftMonocleCodeScope`
   - `CodeScopeInput`, `CodeScopeBuilder`, and the first syntax-driven symbol extraction logic
+- `SwiftMonocleGraph`
+  - `PackageGraph`, `PackageGraphNode`, `PackageGraphEdge`, and the first source-backed package graph fixture
 
 `SwiftMonocleCodeScope` currently depends on [`swift-syntax`](https://github.com/swiftlang/swift-syntax) for phase-1 declaration extraction from active editor buffers.
 

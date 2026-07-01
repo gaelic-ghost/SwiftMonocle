@@ -14,6 +14,7 @@
 		733B6E002671CEA77CDC611F /* SwiftMonocleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586C2FEA41F65BCC2127C145 /* SwiftMonocleApp.swift */; };
 		916FE71A43031B9D8C491DED /* ProjectGraphModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0310378E2EFD221F16BE187 /* ProjectGraphModel.swift */; };
 		B945A930FC32052C4A76A988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 597A2D6F27795BCF7C489F0D /* Assets.xcassets */; };
+		EEF970942FF9D285D4E1764B /* SwiftMonocleGraph in Frameworks */ = {isa = PBXBuildFile; productRef = 1B38150B32A5582E9DB6F507 /* SwiftMonocleGraph */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 			files = (
 				5C0E6306316DDD3E437411B0 /* SwiftMonocle in Frameworks */,
 				32CBE20ECEF5232B12AC82D1 /* SwiftMonocleCore in Frameworks */,
+				EEF970942FF9D285D4E1764B /* SwiftMonocleGraph in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +139,7 @@
 			packageProductDependencies = (
 				AA2F36DEAFBC447E1DD1DD01 /* SwiftMonocle */,
 				EFC26BB581F08E59CFF12F84 /* SwiftMonocleCore */,
+				1B38150B32A5582E9DB6F507 /* SwiftMonocleGraph */,
 			);
 			productName = SwiftMonocleApp;
 			productReference = 3A7E06B941E8ED32C8BB6BFB /* SwiftMonocleApp.app */;
@@ -383,7 +386,7 @@
 					"@executable_path/../Frameworks",
 				);
 				SDKROOT = macosx;
-				configFiles = "[\"Release\": \"Configurations/App-Release.xcconfig\", \"Debug\": \"Configurations/App-Debug.xcconfig\"]";
+				configFiles = "[\"Debug\": \"Configurations/App-Debug.xcconfig\", \"Release\": \"Configurations/App-Release.xcconfig\"]";
 			};
 			name = Debug;
 		};
@@ -398,7 +401,7 @@
 					"@executable_path/../Frameworks",
 				);
 				SDKROOT = macosx;
-				configFiles = "[\"Release\": \"Configurations/App-Release.xcconfig\", \"Debug\": \"Configurations/App-Debug.xcconfig\"]";
+				configFiles = "[\"Debug\": \"Configurations/App-Debug.xcconfig\", \"Release\": \"Configurations/App-Release.xcconfig\"]";
 			};
 			name = Release;
 		};
@@ -442,6 +445,10 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1B38150B32A5582E9DB6F507 /* SwiftMonocleGraph */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftMonocleGraph;
+		};
 		AA2F36DEAFBC447E1DD1DD01 /* SwiftMonocle */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftMonocle;

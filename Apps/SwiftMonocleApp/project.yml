@@ -35,6 +35,8 @@ targets:
         product: SwiftMonocle
       - package: SwiftMonocle
         product: SwiftMonocleCore
+      - package: SwiftMonocle
+        product: SwiftMonocleGraph
     settings:
       configFiles:
         Debug: Configurations/App-Debug.xcconfig
