@@ -41,7 +41,7 @@ What does not exist yet is just as important:
 - there is no docs engine yet
 - there is no Xcode bridge yet
 - there is no Codex-facing bridge yet
-- the macOS app frontend is only a bootstrap shell with package-backed graph fixture data
+- the macOS app frontend is only a bootstrap shell with SwiftPM-manifest-backed graph data
 - the public API is not stable
 
 Expect rapid changes, missing features, rough edges, and frequent restructuring while the first real product slice gets nailed down.
@@ -156,7 +156,7 @@ The package currently exposes four library products:
 - `SwiftMonocleCodeScope`
   - `CodeScopeInput`, `CodeScopeBuilder`, and the first syntax-driven symbol extraction logic
 - `SwiftMonocleGraph`
-  - `PackageGraph`, `PackageGraphNode`, `PackageGraphEdge`, and the first source-backed package graph fixture
+  - `SwiftPackageDescription`, `PackageGraph`, `PackageGraphNode`, `PackageGraphEdge`, and SwiftPM-manifest-backed package graph construction
 
 `SwiftMonocleCodeScope` currently depends on [`swift-syntax`](https://github.com/swiftlang/swift-syntax) for phase-1 declaration extraction from active editor buffers.
 

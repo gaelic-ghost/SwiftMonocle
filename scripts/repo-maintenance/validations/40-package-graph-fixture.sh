@@ -40,77 +40,84 @@ if description.returncode != 0:
 
 manifest = json.loads(description.stdout)
 
-fixture_nodes = set()
-for node_block in re.findall(r"PackageGraphNode\((.*?)\n\s*\)", fixture_source, flags=re.DOTALL):
-    node_id = re.search(r"id: \.(product|target)\(\"([^\"]+)\"\)", node_block)
-    node_kind = re.search(r"kind: \.(libraryTarget|testTarget|product)", node_block)
-    if node_id and node_kind:
-        fixture_nodes.add((node_id.group(1), node_id.group(2), node_kind.group(1)))
-fixture_edges = {
-    (source_kind, source, target_kind, target, edge_kind)
-    for source_kind, source, target_kind, target, edge_kind in re.findall(
-        r"PackageGraphEdge\(\s*source: \.(product|target)\(\"([^\"]+)\"\),\s*target: \.(product|target)\(\"([^\"]+)\"\),\s*kind: \.(productContainsTarget|targetDependsOnTarget|testTargetTestsTarget)",
-        fixture_source,
-        flags=re.MULTILINE,
-    )
+def swift_string_array(source):
+    return re.findall(r'"([^"]+)"', source)
+
+
+fixture_products = {}
+for name, targets_source in re.findall(
+    r'Product\(\s*name: "([^"]+)",\s*targets: \[(.*?)\]\s*\)',
+    fixture_source,
+    flags=re.DOTALL,
+):
+    fixture_products[name] = swift_string_array(targets_source)
+
+fixture_targets = {}
+for target_block in re.findall(r"Target\((.*?)\n\s*\)", fixture_source, flags=re.DOTALL):
+    name = re.search(r'name: "([^"]+)"', target_block)
+    path = re.search(r'path: "([^"]+)"', target_block)
+    target_type = re.search(r"type: \.([A-Za-z]+)", target_block)
+    target_dependencies = re.search(r"targetDependencies: \[(.*?)\]", target_block, flags=re.DOTALL)
+    product_dependencies = re.search(r"productDependencies: \[(.*?)\]", target_block, flags=re.DOTALL)
+    if name and path and target_type:
+        fixture_targets[name.group(1)] = {
+            "path": path.group(1),
+            "type": target_type.group(1),
+            "target_dependencies": swift_string_array(target_dependencies.group(1)) if target_dependencies else [],
+            "product_dependencies": swift_string_array(product_dependencies.group(1)) if product_dependencies else [],
+        }
+
+expected_products = {
+    product["name"]: product["targets"]
+    for product in manifest["products"]
+}
+expected_targets = {
+    target["name"]: {
+        "path": target["path"],
+        "type": {
+            "system-target": "system",
+        }.get(target["type"], target["type"]),
+        "target_dependencies": target.get("target_dependencies", []),
+        "product_dependencies": target.get("product_dependencies", []),
+    }
+    for target in manifest["targets"]
 }
 
-expected_nodes = {}
-for product in manifest["products"]:
-    expected_nodes[("product", product["name"])] = "product"
-
-for target in manifest["targets"]:
-    if target["type"] == "library":
-        expected_nodes[("target", target["name"])] = "libraryTarget"
-    elif target["type"] == "test":
-        expected_nodes[("target", target["name"])] = "testTarget"
-
-expected_edges = set()
-for product in manifest["products"]:
-    for target in product["targets"]:
-        expected_edges.add(("product", product["name"], "target", target, "productContainsTarget"))
-
-for target in manifest["targets"]:
-    if target["type"] == "library":
-        edge_kind = "targetDependsOnTarget"
-    elif target["type"] == "test":
-        edge_kind = "testTargetTestsTarget"
-    else:
-        continue
-
-    for dependency in target.get("target_dependencies", []):
-        expected_edges.add(("target", target["name"], "target", dependency, edge_kind))
-
-fixture_node_names = {(kind, name) for kind, name, _ in fixture_nodes}
-fixture_node_kinds = {(kind, name): node_kind for kind, name, node_kind in fixture_nodes}
-missing_nodes = sorted(set(expected_nodes) - fixture_node_names)
-extra_nodes = sorted(fixture_node_names - set(expected_nodes))
-wrong_node_kinds = sorted(
-    (kind, name, fixture_node_kinds[(kind, name)], expected_kind)
-    for kind, name in set(expected_nodes) & fixture_node_names
-    for expected_kind in [expected_nodes[(kind, name)]]
-    if fixture_node_kinds[(kind, name)] != expected_kind
+missing_products = sorted(set(expected_products) - set(fixture_products))
+extra_products = sorted(set(fixture_products) - set(expected_products))
+wrong_products = sorted(
+    (name, fixture_products[name], expected_products[name])
+    for name in set(expected_products) & set(fixture_products)
+    if fixture_products[name] != expected_products[name]
 )
-missing_edges = sorted(expected_edges - fixture_edges)
-extra_edges = sorted(fixture_edges - expected_edges)
+
+missing_targets = sorted(set(expected_targets) - set(fixture_targets))
+extra_targets = sorted(set(fixture_targets) - set(expected_targets))
+wrong_targets = sorted(
+    (name, fixture_targets[name], expected_targets[name])
+    for name in set(expected_targets) & set(fixture_targets)
+    if fixture_targets[name] != expected_targets[name]
+)
 
 problems = []
-if missing_nodes:
-    problems.append(f"missing manifest-backed graph nodes: {missing_nodes}")
-if extra_nodes:
-    problems.append(f"extra manifest-backed graph nodes not present in Package.swift: {extra_nodes}")
-if wrong_node_kinds:
-    problems.append(f"manifest-backed graph nodes with incorrect graph kind: {wrong_node_kinds}")
-if missing_edges:
-    problems.append(f"missing manifest-backed graph edges: {missing_edges}")
-if extra_edges:
-    problems.append(f"extra manifest-backed graph edges not present in Package.swift: {extra_edges}")
+if missing_products:
+    problems.append(f"missing SwiftPM products: {missing_products}")
+if extra_products:
+    problems.append(f"extra SwiftPM products not present in Package.swift: {extra_products}")
+if wrong_products:
+    problems.append(f"SwiftPM products with mismatched targets: {wrong_products}")
+if missing_targets:
+    problems.append(f"missing SwiftPM targets: {missing_targets}")
+if extra_targets:
+    problems.append(f"extra SwiftPM targets not present in Package.swift: {extra_targets}")
+if wrong_targets:
+    problems.append(f"SwiftPM targets with mismatched metadata: {wrong_targets}")
 
 if problems:
     raise SystemExit(
-        "ERROR: SwiftMonocleGraph bootstrap fixture drifted from Package.swift. "
+        "ERROR: SwiftMonocleGraph SwiftPM description bootstrap drifted from Package.swift. "
         + " ".join(problems)
     )
 
-print("Package graph fixture matches Package.swift products, targets, and target dependencies.")
+print("Package graph SwiftPM description matches Package.swift products, targets, and dependencies.")
 PY

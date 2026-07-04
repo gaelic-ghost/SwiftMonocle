@@ -22,12 +22,12 @@ It currently provides:
 - `Apps/SwiftMonocleApp/project.yml` as the XcodeGen source of truth
 - checked-in `.xcconfig` files for app and test build settings
 - a SwiftUI `SwiftMonocleApp` entry point with a first graph dashboard window
-- a package-backed bootstrap graph model linked against `SwiftMonocle`, `SwiftMonocleCore`, and `SwiftMonocleGraph`
+- a SwiftPM-manifest-backed bootstrap graph model linked against `SwiftMonocle`, `SwiftMonocleCore`, and `SwiftMonocleGraph`
 - source path and related-test details in the app inspector
 - Swift Testing coverage for the package graph model and the app graph adapter
 - `.codex/environments/xcode-project.toml` actions for project generation, build, and test
 
-The scaffold is intentionally fixture-backed. `SwiftMonocleGraph` now owns reusable package/product/target graph primitives and a source-backed fixture for this repository. Live package graph extraction should build on that target before the app depends on live package parsing or indexing behavior.
+The scaffold is intentionally bootstrap-backed. `SwiftMonocleGraph` now owns reusable package/product/target graph primitives, SwiftPM manifest JSON decoding, and graph construction from that decoded manifest shape. Live package graph reload should build on that target before the app depends on long-running package parsing or indexing behavior.
 
 ## Why Not Put Everything In The Package Manifest
 
@@ -106,6 +106,7 @@ Scope:
 - load the current package root
 - parse package products, targets, dependencies, and test targets
 - show a target/product dependency graph
+- show git branches and worktrees once repository-state modeling exists
 - show an API/symbol outline for the selected target or file using the existing syntax extraction path
 - expose a detail inspector for node identity, provenance, source path, and related tests
 - keep graph state exportable as plain Swift models so tests can verify it without launching the app
@@ -136,16 +137,19 @@ This should follow the current Milestone 2 runtime/scope pipeline unless the vis
 
 Recommended sequencing:
 
-1. Add a package-level graph model and tests for package target/product relationships. Done for the fixture-backed `SwiftMonocleGraph` slice.
-2. Add API-outline projection on top of the existing syntax extraction path.
-3. Add the companion Xcode app workspace with one graph browser window.
-4. Add accessibility and UI validation for graph navigation, search, selection, and inspector state.
-5. Revisit the Xcode Source Editor Extension only after the app has a useful standalone graph surface.
+1. Add a package-level graph model and tests for package target/product relationships. Done for the manifest-backed `SwiftMonocleGraph` slice.
+2. Add live package reload on top of SwiftPM manifest JSON loading.
+3. Add API-outline projection on top of the existing syntax extraction path.
+4. Add a git branches/worktrees viewer backed by explicit repository-state models.
+5. Continue evolving the companion Xcode app workspace from the current graph browser window.
+6. Add accessibility and UI validation for graph navigation, search, selection, and inspector state.
+7. Revisit the Xcode Source Editor Extension only after the app has a useful standalone graph surface.
 
 ## Open Decisions
 
 - Which graph rendering approach gives the best accessible fallback: custom SwiftUI layout, outline-plus-canvas hybrid, or a native outline/table-first UI with graph preview.
 - Whether live package reload belongs in the first app slice or waits for the host/control-plane milestone.
+- Whether git branch and worktree state belongs in `SwiftMonocleGraph`, a future repository-state target, or the app boundary until it needs reuse.
 
 ## Decisions Made
 
